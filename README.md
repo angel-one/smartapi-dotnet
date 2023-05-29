@@ -7,9 +7,9 @@ Execute orders in real time, manage user portfolio, stream live market data (Web
 
 ## Prerequisite 
 
-Download [smartapi-dotnet dll](https://github.com/angelbroking-github/smartapi-dotnet/tree/main/DLL/AngelBroking.dll) file and add reference to your desktop/web application 
+Download [smartapi-dotnet dll](https://github.com/angel-one/smartapi-dotnet/tree/main/DLL/AngelBroking.dll) file and add reference to your desktop/web application 
 
-[Click here](https://github.com/angelbroking-github/smartapi-dotnet/tree/main/DLL) to get all necessory dll that you may need, or you can install from package manager console as follow
+[Click here](https://github.com/angel-one/smartapi-dotnet/tree/main/DLL) to get all necessory dll that you may need, or you can install from package manager console as follow
 
 PM> Install-Package Newtonsoft.Json. 
 For More details (https://www.nuget.org/packages/Newtonsoft.Json/)
