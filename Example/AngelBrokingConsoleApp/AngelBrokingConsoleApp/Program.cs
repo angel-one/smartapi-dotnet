@@ -13,7 +13,7 @@ namespace AngelBrokingConsoleApp
     {
         static void Main(string[] args)
         {
-            //Initialize Samart API using clientcode and password.
+            //Initialize Samart API using clientcode and password to test the code.
 
             string Client_code = "";  //YOUR CLIENT CODE
             string Password = ""; //YOUR PASSWORD
