@@ -15,12 +15,12 @@ namespace Websocket2
     class PlaceOrderApi
     {
         static Ticker ticker;
-        static string clientCode = "V51320342";
-        static string password = "0105";
-        static string apiKey = "Qkgu7The";
+        static string clientCode = "";
+        static string password = "";
+        static string apiKey = "";
         static string jwtToken = "";  // optional
         static string refreshToken = ""; // optional
-        static string totp = "068055";
+        static string totp = "";
 
       
         public static TickerRequest initialRequest = new TickerRequest

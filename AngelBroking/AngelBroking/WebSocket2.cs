@@ -13,7 +13,7 @@ using zlib;
 namespace AngelBroking
 {
     #region WebSocketv2
-    // Delegates for events
+    // Delegates for Events
     public delegate void OnConnectHandler();
     public delegate void OnCloseHandler();
     public delegate void OnErrorHandler(string Message);
