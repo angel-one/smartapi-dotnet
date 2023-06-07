@@ -278,7 +278,7 @@ namespace AngelBroking
         {
             OnConnect?.Invoke();
             // Start the heartbeat method once connected
-            //Heartbeat();
+            Heartbeat();
         }
         /// <summary>
         /// Tells whether ticker is connected to server not.
