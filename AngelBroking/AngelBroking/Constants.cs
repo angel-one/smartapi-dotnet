@@ -8,6 +8,7 @@ namespace AngelBroking
 {
     public class Constants
     {
+        #region Websocketv1
         // Products
         public const string PRODUCT_TYPE_DELIVERY = "DELIVERY";
         public const string PRODUCT_TYPE_MARGIN = "MARGIN";
@@ -51,5 +52,28 @@ namespace AngelBroking
         public const string INTERVAL_THIRTY_MINUTE = "THIRTY_MINUTE";
         public const string INTERVAL_ONE_HOUR = "ONE_HOUR";
         public const string INTERVAL_ONE_DAY = "ONE_DAY";
+        #endregion
+
+        #region WebSocketv2
+        // Ticker modes
+        public const string MODE_FULL = "SnapQuote";
+        public const string MODE_QUOTE = "Quote";
+        public const string MODE_LTP = "LTP";
+
+        public const string PING = "ping";
+
+        public const int SNAPQUOTE = 3;
+        public const int QUOTE = 2;
+        public const int LTP = 1;
+
+        // WS URl
+        public const string ROOT = "ws://smartapisocket.angelone.in/smart-stream";
+
+        //Header parameters
+        public const string  AUTHORIZATION = "Authorization";
+        public const string  APIKEY = "x-api-key";
+        public const string  CLIENTCODE = "x-client-code";
+        public const string  FEEDTOKEN = "x-feed-token";
+        #endregion
     }
 }

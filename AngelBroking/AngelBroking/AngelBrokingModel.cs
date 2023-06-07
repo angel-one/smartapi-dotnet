@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AngelBroking
@@ -9,7 +11,7 @@ namespace AngelBroking
     class AngelBrokingModel
     {
     }
-    #region AngelBrokingModel 
+    #region Websocketv1
     /* Output Classes*/
     public class AngelToken
     {
@@ -17,7 +19,7 @@ namespace AngelBroking
         public string refreshToken { get; set; }
         public string feedToken { get; set; }
     }
-    class AngelTokenResponse
+    public class AngelTokenResponse
     {
         public bool status { get; set; }
         public string message { get; set; }
@@ -377,21 +379,6 @@ namespace AngelBroking
         public string transactiontype { get; set; }
         public int quantity { get; set; }
         public string type { get; set; }
-        //public string symboltoken { get; set; }
-        //public string producttype { get; set; }
-        //public string symbolname { get; set; }
-        //public string instrumenttype { get; set; }
-        //public string priceden { get; set; }
-        //public string pricenum { get; set; }
-        //public string genden { get; set; }
-        //public string gennum { get; set; }
-        //public string precision { get; set; }
-        //public string multiplier { get; set; }
-        //public string boardlotsize { get; set; }
-        //public string buyqty { get; set; }
-        //public string sellqty { get; set; }
-        //public string buyamount { get; set; }
-        //public string sellamount { get; set; }
     }
 
     public class CreateRuleRequest
@@ -435,6 +422,29 @@ namespace AngelBroking
         public string symboltoken { get; set; }
         public string exchange { get; set; }
         public string tradingsymbol { get; set; }
+    }
+    #endregion
+
+    #region WebSocketv2
+    public class TokenParams
+    {
+        public int mode { get; set; }
+        public List<TokenList> tokenList { get; set; }
+    }
+    public class TickerRequest
+    {
+        public string correlationID { get; set; }
+        public int action { get; set; }
+
+        [JsonPropertyName("params")]
+        public TokenParams param { get; set; }
+    }
+    public class TokenList
+    {
+        public int exchangeType { get; set; }
+        public List<string> tokens { get; set; }
+
+       
     }
     #endregion
 }
