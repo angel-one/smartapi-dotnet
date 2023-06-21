@@ -18,7 +18,7 @@ namespace AngelBroking
         Task SendAsync(string Message);
         Task ReceiveAsync();
         bool IsConnectedForSocket();
-        void CloseForSocket(bool Abort = false);
+        void CloseForSocket();
 
 
         void Heartbeat(string Message);

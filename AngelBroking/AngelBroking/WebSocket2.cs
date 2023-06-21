@@ -13,7 +13,7 @@ using zlib;
 namespace AngelBroking
 {
     #region WebSocketv2
-    // Delegates for Events
+    // Delegates for events
     public delegate void OnConnectHandler();
     public delegate void OnCloseHandler();
     public delegate void OnErrorHandler(string Message);
@@ -26,7 +26,7 @@ namespace AngelBroking
 
         ClientWebSocket _cws;
         string _curl;
-    
+
         private SemaphoreSlim _lockObject = new SemaphoreSlim(1, 1);
 
 
@@ -34,8 +34,6 @@ namespace AngelBroking
         public event OnCloseHandler OnClose;
         public event OnDataHandler OnData;
         public event OnErrorHandler OnError;
-
-        private bool _isWebSocketAborted = false;
 
         public WebSocket2()
         {
@@ -48,7 +46,7 @@ namespace AngelBroking
 
             return _cws.State == WebSocketState.Open;
         }
-       
+
 
         public void Connect(string Url, Dictionary<string, string> headers = null)
         {
@@ -71,10 +69,6 @@ namespace AngelBroking
             }
             catch (Exception e)
             {
-                if (_cws.State == WebSocketState.Aborted)
-                {
-                    _isWebSocketAborted = true;
-                }
                 OnError?.Invoke("Error while receiving data. Message: " + e.Message);
             }
         }
@@ -82,11 +76,11 @@ namespace AngelBroking
 
         public async Task SendAsync(string Message)
         {
-            if (_cws.State == WebSocketState.Open && !_isWebSocketAborted)
+            if (_cws.State == WebSocketState.Open)
             {
                 try
                 {
-                    _cws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(Message)), WebSocketMessageType.Text, true, CancellationToken.None).Wait();
+                    await _cws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(Message)), WebSocketMessageType.Text, true, CancellationToken.None);
                 }
                 catch (Exception e)
                 {
@@ -98,7 +92,7 @@ namespace AngelBroking
 
         public async Task ReceiveAsync()
         {
-            while (_cws.State == WebSocketState.Open && !_isWebSocketAborted)
+            while (_cws.State == WebSocketState.Open)
             {
                 try
                 {
@@ -127,47 +121,32 @@ namespace AngelBroking
                         OnData?.Invoke(buffer, result.EndOfMessage, result.MessageType.ToString());
                     }
                 }
-                catch (Exception e)
+                catch (WebSocketException wsEx) when (wsEx.InnerException is IOException || wsEx.InnerException is ObjectDisposedException)
                 {
-                    if (_cws.State == WebSocketState.Aborted)
-                    {
-                        _isWebSocketAborted = true;
-                        OnError?.Invoke("WebSocket connection aborted.");
-                        break;
-                    }
-                    else
-                    {
-                        OnError?.Invoke("Error while receiving data. Message: " + e.Message);
-                    }
+                    // Ignore the exceptions caused by network interruption or disposed WebSocket instance
+                }
+                catch (WebSocketException wsEx) when (wsEx.Message.Contains("Aborted"))
+                {
+                    // Ignore the exceptions caused by the WebSocket being in an aborted state
+                }
+                catch (Exception e) when (e.Message.Contains("Error while receiving data. Message: One or more errors occurred.") == false)
+                {
+                    OnError?.Invoke("Reconnecting...");
                 }
             }
         }
 
 
 
-        public void CloseForSocket(bool Abort = false)
+
+
+        public void CloseForSocket()
         {
             if (_cws.State == WebSocketState.Open)
             {
                 try
                 {
-                    if (_isWebSocketAborted)
-                    {
-                        Console.WriteLine("WebSocket connection aborted.");
-                    }
-                    else
-                    {
-                        if (Abort)
-                        {
-                            _cws.Abort();
-                            Console.WriteLine("Aborted successfully");
-                        }
-                        else
-                        {
-                            _cws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).Wait();
-                           
-                        }
-                    }
+                    _cws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).Wait();
                 }
                 catch (Exception e)
                 {
@@ -192,12 +171,6 @@ namespace AngelBroking
             }
         }
 
-
-
-
-
-
         #endregion
     }
-
 }

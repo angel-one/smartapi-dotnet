@@ -277,7 +277,7 @@ static void WriteResult(object sender, MessageEventArgs e)
 ```
 ### --------------- Socket Sample Code Ends Here -------------
 
-### -------------Websocket Streaming 2.0 ------------
+### -------------Websocket Streaming 2.0 Starts Here------------
 
 Please follow below step in order to implement socket using dot net library
 
@@ -288,12 +288,12 @@ Please follow below step in order to implement socket using dot net library
 
 ```
 static Ticker ticker;
-static string clientCode = ""; YOUR CLIENT CODE
-static string password = ""; YOUR PASSWORD
-static string apiKey = ""; YOUR APIKEY
-static string jwtToken = "";  // optional
-static string refreshToken = ""; // optional
-static string totp = ""; YOUR TOTP
+static string clientCode = "";        // Enter clientCode
+static string password = "";          // Enter Password
+static string apiKey = "";            // Enter apikey
+static string jwtToken = "";          // optional
+static string refreshToken = "";      // optional
+static string totp = "";              // Enter totp
 
  public static TickerRequest initialRequest = new TickerRequest
         {
@@ -372,7 +372,7 @@ private static void OnTick(Tick TickData)
 
 
 ```
-### --------------- Websocket Streaming 2.0 ends here -------------
+### --------------- Websocket Streaming 2.0 Ends Here -------------
  
 ### -------------Socket Sample Code to get current orders status Starts Here ------------
 
