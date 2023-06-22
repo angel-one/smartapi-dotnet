@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace AngelBroking
 {
+    #region WebSocketv2
     public static class Helpers
     {
         public static byte[] DecodeBase64Byte(this string value)
@@ -100,4 +101,5 @@ namespace AngelBroking
     {
         public string Message { get; set; }
     }
+    #endregion
 }

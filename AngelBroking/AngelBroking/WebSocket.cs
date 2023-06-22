@@ -13,16 +13,17 @@ using zlib;
 namespace AngelBroking
 {
     public class WebSocket : IWebSocket
-    {
-        
+    {       
+
+        #region WebSocketv1
         ManualResetEvent receivedEvent = new ManualResetEvent(false);
         int receivedCount = 0;
         WebsocketClient _ws;        
         string _url = "wss://smartapisocket.angelbroking.com/websocket?";
-        string _url2 = "wss://omnefeeds.angelbroking.com/NestHtml5Mobile/socket/stream";
+        string _url2 = "wss://omnefeeds.angelbroking.com/NestHtml5Mobile/socket/stream";       
 
         public event EventHandler<MessageEventArgs> MessageReceived;
-        
+
         public WebSocket()
         {
 
@@ -34,6 +35,8 @@ namespace AngelBroking
 
             return _ws.IsStarted;
         }
+
+
         public void ConnectforOrderQuote(string feedtype, string jwttoken, string clientcode, string apikey)
         {
             try
@@ -250,4 +253,5 @@ namespace AngelBroking
             }
         }
     }
+    #endregion
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Wiry.Base32</name>
+    </assembly>
+    <members>
+        <member name="T:Wiry.Base32.Base32Encoding">
+            <summary>
+            Generic Base32 implementation
+            </summary>
+        </member>
+        <member name="P:Wiry.Base32.Base32Encoding.Standard">
+            <summary>
+            Represent standard encoding defined in RFC 4648
+            </summary>
+        </member>
+        <member name="P:Wiry.Base32.Base32Encoding.ZBase32">
+            <summary>
+            Represent z-base-32 encoding by Zooko O'Whielacronx
+            </summary>
+        </member>
+        <member name="M:Wiry.Base32.Base32Encoding.GetString(System.Byte[])">
+            <summary>
+            Get encoded string
+            </summary>
+        </member>
+        <member name="M:Wiry.Base32.Base32Encoding.GetString(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            When overridden in a derived class, encodes bytes a string.
+            </summary>
+        </member>
+        <member name="M:Wiry.Base32.Base32Encoding.ToBytes(System.String)">
+            <summary>
+            When overridden in a derived class, decodes string data to bytes.
+            </summary>
+        </member>
+        <member name="M:Wiry.Base32.Base32Encoding.ToBytes(System.String,System.Int32,System.Int32)">
+            <summary>
+            When overridden in a derived class, decodes string data to bytes.
+            </summary>
+        </member>
+    </members>
+</doc>

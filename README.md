@@ -276,6 +276,103 @@ static void WriteResult(object sender, MessageEventArgs e)
 }
 ```
 ### --------------- Socket Sample Code Ends Here -------------
+
+### -------------Websocket Streaming 2.0 Starts Here------------
+
+Please follow below step in order to implement socket using dot net library
+
+1. Initialize library with credentials.
+2. Login with clientcode, apikey, password and totp to generate token for connecting socket.
+3. Create a script of required stocks to watch and decide the action for sending script.
+4. Connect socket using feedToken, jwtToken.
+
+```
+static Ticker ticker;
+static string clientCode = "";        // Enter clientCode
+static string password = "";          // Enter Password
+static string apiKey = "";            // Enter apikey
+static string jwtToken = "";          // optional
+static string refreshToken = "";      // optional
+static string totp = "";              // Enter totp
+
+ public static TickerRequest initialRequest = new TickerRequest
+        {
+            correlationID = "abcde12345",
+            action = 1,
+            param = new TokenParams
+            {
+                mode = 1,
+                tokenList = new List<TokenList>
+        {
+            new TokenList
+            {
+                exchangeType = 1,
+                tokens = new List<string>
+                {
+                    "1594"
+                }
+            }
+              }
+            }
+        };
+
+SmartApi connect = new SmartApi(apiKey, jwtToken, refreshToken);
+
+OutputBaseClass obj = new OutputBaseClass();
+
+obj = connect.GenerateSession(clientCode, password, totp);
+AngelToken sagr = obj.TokenResponse;
+
+private static void initTicker(string jwttoken, string api_key, string client_code, string feedtoken)
+  {
+      ticker = new Ticker(jwttoken, api_key, client_code, feedtoken);
+
+      ticker.OnTickLtp += OnTickLtp;
+      ticker.OnTickQuote += OnTickQuote;
+      ticker.OnTick += OnTick;
+      ticker.OnTickPong += OnTickPong;
+      ticker.OnError += OnError;
+      ticker.OnClose += OnClose;
+      ticker.OnConnect += OnConnect;
+
+
+      ticker.Connect();  METHOD TO START THE CONNECTION TO WEBSOCKET
+
+      string initialMsg = Utils.JsonSerialize(initialRequest);
+      ticker.SetMode(initialMsg);     METHOD TO SEND THE REQUEST TO SUBSCRIBE THE FEED
+
+ }
+
+Below method is to get the LTP feed: 
+
+private static void OnTickLtp(TickLtp TickData)  
+{
+    Console.WriteLine("TickLTP " + Utils.JsonSerialize(TickData));
+
+      //UnSubscribe();  COMMENTOUT TO UNSUBSCRIBE FEED
+}
+
+Below method is to get the QUOTE feed: 
+
+ private static void OnTickQuote(TickQuote TickData)
+{
+    Console.WriteLine("TickQuote " + Utils.JsonSerialize(TickData));
+
+    //UnSubscribe();    COMMENTOUT TO UNSUBSCRIBE FEED
+}
+
+Below method is to get the SNAPQUOTE feed: 
+
+private static void OnTick(Tick TickData)
+{
+    Console.WriteLine("Tick " + Utils.JsonSerialize(TickData));
+
+    //UnSubscribe();     COMMENTOUT TO UNSUBSCRIBE FEED
+}
+
+
+```
+### --------------- Websocket Streaming 2.0 Ends Here -------------
  
 ### -------------Socket Sample Code to get current orders status Starts Here ------------
 
